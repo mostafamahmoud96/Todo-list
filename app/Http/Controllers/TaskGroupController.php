@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TaskGroupRequest;
+use App\Http\Requests\UpdateTaskGroupRequest;
 use App\Models\Task;
 use App\Models\TaskGroup;
 use Illuminate\Http\Request;
@@ -18,11 +19,6 @@ class TaskGroupController extends Controller
         return view('taskGroup.list', compact('task_groups'));
     }
 
-    public function show()
-    {
-        return view('taskGroup.show');
-    }
-
     public function create()
     {
         return view('taskGroup.create');
@@ -31,9 +27,8 @@ class TaskGroupController extends Controller
     public function store(TaskGroupRequest $request)
     {
         $attributes = $request->validated();
-        $attributes['user_id'] = Auth::user()->id;
         $task_groups = TaskGroup::create($attributes);
-        return redirect()->route('taskGroup.index');
+        return redirect()->route('user.taskGroup.index');
     }
 
     /**
@@ -42,8 +37,9 @@ class TaskGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(TaskGroup $task_group)
+    public function edit($id)
     {
+        $task_group = TaskGroup::find($id);
         return view('taskGroup.edit', compact('task_group'));
     }
 
@@ -54,8 +50,11 @@ class TaskGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TaskGroupRequest $request, $id)
+    public function update(UpdateTaskGroupRequest $request, $id)
     {
+        $task_group = TaskGroup::find($id);
+        $task_group->update($request->validated());
+        return redirect()->route('user.taskGroup.index');
     }
 
     /**
@@ -68,8 +67,7 @@ class TaskGroupController extends Controller
     {
         $task_group = TaskGroup::find($id);
         $task_group->delete();
-
-        return redirect()->route('taskGroup.index')->with('success', 'Task deleted successfully');;
+        return redirect()->route('user.taskGroup.index');
 
     }
 }

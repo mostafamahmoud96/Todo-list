@@ -23,11 +23,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::get('/create/task', [TaskController::class, 'create'])->name('task.create');
-    Route::post('/store/task', [TaskController::class, 'store'])->name('task.store');
-    Route::get('/list/grouptask',[TaskGroupController::class,'index'])->name('taskGroup.index');
-    Route::get('/create/grouptask',[TaskGroupController::class,'create'])->name('taskGroup.create');
-    Route::post('/store/grouptask',[TaskGroupController::class,'store'])->name('taskGroup.store');
-    Route::Delete('/delete/grouptask/{id}',[TaskGroupController::class,'destroy'])->name('taskGroup.delete');
+Route::group(['prefix' => 'user', 'as' => 'user.', 'middleware' => 'auth'],function () {
+    Route::resource('taskGroup',TaskGroupController::class);
+    Route::resource('task',TaskController::class);
+
+    Route::get('changeStatus', [TaskController::class,'changeStatus'])->name('change-status');
+
 });

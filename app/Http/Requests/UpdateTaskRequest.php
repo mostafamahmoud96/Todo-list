@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class TaskRequest extends FormRequest
+class UpdateTaskRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +26,7 @@ class TaskRequest extends FormRequest
         return [
             'name' => 'required',
             'description' => 'required',
-            'task_group_id'=>'nullable',
+            'task_group_id' => 'nullable',
         ];
     }
 }

@@ -17,11 +17,14 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('task_group_id')->nullable();
+            $table->foreign('task_group_id')->references('id')->on('task_groups');
             $table->string('name');
             $table->string('description');
             $table->string('note')->nullable();
-            $table->boolean('status')->default(0);
+            $table->boolean('is_active')->default(0);
             $table->date('completed_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

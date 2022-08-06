@@ -1,6 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="p-3">
+
+    <a class="btn btn-primary" href="{{route('user.taskGroup.create')}}">Create New Task Group</a>
+</div>
+
+
     <table class="table table-bordered">
         <tr>
             <th>No</th>
@@ -13,9 +19,9 @@
                 <td>{{ $product->id }}</td>
                 <td>{{ $product->name }}</td>
                 <td>
-                    <form action="{{route('taskGroup.delete',$product->id)}}" method="POST">
+                    <form action="{{ route('user.taskGroup.destroy', $product->id) }}" method="POST">
 
-                        <a class="btn btn-primary" href="">Edit</a>
+                        <a class="btn btn-primary" href="{{route('user.taskGroup.edit',$product->id)}}">Edit</a>
                         @csrf
                         @method('delete')
 
@@ -25,5 +31,4 @@
             </tr>
         @endforeach
     </table>
-
 @endsection

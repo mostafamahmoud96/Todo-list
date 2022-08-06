@@ -9,7 +9,7 @@
 
 
                         <form
-                            action="{{route('taskGroup.store')}}"
+                            action="{{route('user.taskGroup.store')}}"
                             method="POST">
                             @csrf
                             <div class="card-header">{{ __('Create Category') }}</div>
