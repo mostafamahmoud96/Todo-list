@@ -21,6 +21,11 @@ run composer install
 php artisan migrate
 php artisan key:generate
 
+to run unit test use  These Commands
+vendor/bin/phpunit tests/Feature/TaskTest.php
+vendor/bin/phpunit tests/Feature/GroupTaskTest.php
+
+
 To stop Docker Containers
 docker-compose down --remove-orphans
 
