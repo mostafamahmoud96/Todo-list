@@ -19,6 +19,10 @@ class TaskGroupController extends Controller
         return view('taskGroup.list', compact('task_groups'));
     }
 
+    public function show($id)
+    {
+        
+    }
     public function create()
     {
         return view('taskGroup.create');

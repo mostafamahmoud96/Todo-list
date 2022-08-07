@@ -21,7 +21,7 @@ class TaskTest extends TestCase
         $user = Auth::loginUsingId(User::factory()->create()->id);
 
         $this->actingAs($user);
-        $task = Task::factory()->create();
+        $task = Task::factory()->create(['user_id'=>Auth::id()]);
 
         $response = $this->get('user/task');
 
@@ -93,26 +93,13 @@ class TaskTest extends TestCase
         $this->put('/user/task/' . $task->id, $task->toArray());
         $this->assertDatabaseHas('tasks', ['id' => $task->id, 'name' => 'Updated name']);
     }
-
-    /** @test */
-    // public function unauthorized_user_cannot_update_the_task()
-    // {
-
-    //     $user = Auth::loginUsingId(User::factory()->create()->id);
-    //     $this->actingAs($user);
-    //     $task = Task::factory()->create(['id' => 1]);
-
-    //     $task->name = "Updated name";
-    //     $response = $this->put('user/task/' . $task->id, $task->toArray());
-    //     $response->assertStatus(403);
-    // }
     /** @test */
     public function authorized_user_can_delete_the_task()
     {
 
         $user = Auth::loginUsingId(User::factory()->create()->id);
         $this->actingAs($user);
-        $task = Task::factory()-> create(['user_id' => Auth::id(), 'id' => 1]);
+        $task = Task::factory()->create(['user_id' => Auth::id(), 'id' => 1]);
 
         $this->delete('user/task/' . $task->id);
         // dd(Task::all());
