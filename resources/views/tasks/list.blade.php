@@ -21,7 +21,7 @@
             <tr>
                 <td>{{ $task->name }}</td>
                 <td class="text-center">{{ $task->description }}</td>
-                <td id="status_{{$task->id}}">{{ $task->is_active }}</td>
+                <td class="font-weight-bold text-center " id="status_{{$task->id}}">{{ $task->is_active }}</td>
                 <td>{{ (new Carbon\Carbon($task->created_at))->diffForHumans() }}</td>
                 <td><input class="togglefunction" type="checkbox" @if ($task->getRawOriginal('is_active')) checked @endif
                         id="is_active" name="is_active" value="on" data-toggle="toggle" data-fid="{{ $task->id }}">
