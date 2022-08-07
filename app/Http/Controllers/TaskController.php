@@ -105,7 +105,6 @@ class TaskController extends Controller
    }
    public function changeStatus(Request $request)
     {
-        // dd($request->toArray());
         $task= Task::where('id', $request->id)->first();
         $task->toggleIsActive()->save();
         return redirect()->route('user.task.index')->with('info', 'Task status is Changed successfully!');
