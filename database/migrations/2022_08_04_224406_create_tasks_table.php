@@ -21,7 +21,6 @@ class CreateTasksTable extends Migration
             $table->foreign('task_group_id')->references('id')->on('task_groups');
             $table->string('name');
             $table->string('description');
-            $table->string('note')->nullable();
             $table->boolean('is_active')->default(0);
             $table->date('completed_at')->nullable();
             $table->softDeletes();

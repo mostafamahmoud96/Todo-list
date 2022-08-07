@@ -12,7 +12,7 @@
                             action="{{route('user.taskGroup.store')}}"
                             method="POST">
                             @csrf
-                            <div class="card-header">{{ __('Create Category') }}</div>
+                            <div class="card-header">{{ __('Create Task Group') }}</div>
 
                             <div class="card-body">
                                 <div class="row">
@@ -25,7 +25,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save Category') }}</button>
+                                <button class="btn btn-sm btn-primary" type="submit"> {{ __('Save Task Group') }}</button>
                             </div>
                         </form>
                     </div>

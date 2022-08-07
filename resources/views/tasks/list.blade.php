@@ -2,66 +2,62 @@
 
 @section('content')
     <div class="p-3">
-        <a class="btn btn-primary" href="{{ route('user.task.create') }}">Create Task </a>
+        <a class="btn btn-primary float-right m-5" href="{{ route('user.task.create') }}">Create Task </a>
     </div>
 
 
-    <table class="table table-bordered">
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Status Of Task</th>
+    <table class="table table-bordered table-striped" >
+        @if(count($tasks)>0)
+        <tr  class="table-info">
+            <th class="text-center" style="width: 180px">Name</th>
+            <th class="text-center">Description</th>
+            <th style="width: 130px">Status Of Task</th>
 
-            <th>Created</th>
-            <th width="200px">Action</th>
+            <th style="width: 100px">Created</th>
+            <th style="width: 90px">Change Status</th>
+            <th width="100px">Action</th>
         </tr>
         @foreach ($tasks as $task)
             <tr>
                 <td>{{ $task->name }}</td>
-                <td>{{ $task->description }}</td>
-                <td>{{ $task->is_active }}</td>
+                <td class="text-center">{{ $task->description }}</td>
+                <td id="status_{{$task->id}}">{{ $task->is_active }}</td>
                 <td>{{ (new Carbon\Carbon($task->created_at))->diffForHumans() }}</td>
+                <td><input class="togglefunction" type="checkbox" @if ($task->getRawOriginal('is_active')) checked @endif
+                        id="is_active" name="is_active" value="on" data-toggle="toggle" data-fid="{{ $task->id }}">
+                </td>
                 <td>
 
                     <a class="btn btn-primary" href="{{ route('user.task.edit', $task->id) }}">Edit</a>
 
                 </td>
-                <td><input class="togglefunction" type="checkbox" @if ($task->is_active) checked @endif
-                        id="is_active" name="is_active" value="on" data-toggle="toggle" data-fid="{{ $task->id }}">
-                </td>
 
             </tr>
         @endforeach
-
+        @else
+        <h1 class="text-center">
+            You Don't Tasks Yet...
+        </h1>
+@endif
     </table>
-    <!-- Modal -->
-     <!-- Modal -->
- <div class="modal fade" id="getCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-       <div class="modal-header">
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-         <h4 class="modal-title" id="myModalLabel"> API CODE </h4>
-       </div>
-       <div class="modal-body" id="getCode" style="overflow-x: scroll;">
-          //ajax success content here.
-       </div>
-    </div>
-   </div>
- </div>
-
     <script>
         $('.togglefunction').on('change', function() {
             //send value by ajax to server
+            let id = $(this).data('fid');
             $.ajax({
                 url: '{{ route('user.change-status') }}',
                 type: 'GET',
                 data: {
-                    id: $(this).data('fid')
+                    id: id
                 },
                 success: function() {
-                    console.log("Sssssssssssssssss");
-                    $("#getCodeModal").modal("show");
+                    let val = $('#status_'+id).html();
+
+                    if (val == 'Pending') {
+                        $('#status_'+id).html('Done');
+                    } else {
+                        $('#status_'+id).html('Pending');
+                    }
                 }
             }).done(function(response) {
 

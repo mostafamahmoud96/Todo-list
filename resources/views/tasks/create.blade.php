@@ -35,10 +35,6 @@
                                             <textarea class="form-control" name="description" rows="5" id="task-textarea"></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label for="task-textarea">{{ __('Note') }}</label>
-                                            <textarea class="form-control" name="note" rows="5" id="task-textarea"></textarea>
-                                        </div>
-                                        <div class="form-group">
                                             <label for="">Task Group (Optional)</label>
                                             <select name="task_group_id" class="form-control">
                                                 <option value=""> -- Select One --</option>

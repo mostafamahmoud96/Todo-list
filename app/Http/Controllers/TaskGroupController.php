@@ -28,7 +28,8 @@ class TaskGroupController extends Controller
     {
         $attributes = $request->validated();
         $task_groups = TaskGroup::create($attributes);
-        return redirect()->route('user.taskGroup.index');
+        return redirect()->route('user.taskGroup.index')->with('success', 'Task Group Is created successfully!');
+
     }
 
     /**
@@ -54,7 +55,7 @@ class TaskGroupController extends Controller
     {
         $task_group = TaskGroup::find($id);
         $task_group->update($request->validated());
-        return redirect()->route('user.taskGroup.index');
+        return redirect()->route('user.taskGroup.index')->with('info', 'Task Group Is Edited successfully!');
     }
 
     /**
@@ -67,7 +68,7 @@ class TaskGroupController extends Controller
     {
         $task_group = TaskGroup::find($id);
         $task_group->delete();
-        return redirect()->route('user.taskGroup.index');
+        return redirect()->route('user.taskGroup.index')->with('warning', 'Task Group Is Deleted successfully!');
 
     }
 }

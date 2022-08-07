@@ -67,6 +67,7 @@
     </header>
     <div class="c-body">
         <main class="c-main">
+            @include('flash-message')
             @yield('content')
         </main>
     </div>

@@ -19,7 +19,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = Task::where('user_id',Auth::id())->get();
 
         return view('tasks.list',compact('tasks'));
     }
@@ -46,7 +46,7 @@ class TaskController extends Controller
         $attributes = $request->validated();
         $attributes['user_id'] = Auth::user()->id;
         $task_groups = Task::create($attributes);
-        return redirect()->route('user.task.index');
+        return redirect()->route('user.task.index')->with('success', 'Task created successfully!');
     }
 
     /**
@@ -85,7 +85,8 @@ class TaskController extends Controller
     {
         $task= Task::find($id);
         $task->update($request->validated());
-        return redirect()->route('user.task.index');
+        return redirect()->route('user.task.index')->with('info', 'Task Is Edited successfully!');
+
     }
 
     /**
@@ -96,16 +97,16 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        // dd($id);
         $task_group = Task::find($id);
         $task_group->delete();
-        return redirect()->route('user.taskGroup.index');
+        return redirect()->route('user.task.index')->with('info', 'Task Is Deleted successfully!');
 
    }
    public function changeStatus(Request $request)
     {
+        // dd($request->toArray());
         $task= Task::where('id', $request->id)->first();
         $task->toggleIsActive()->save();
-        return redirect('/home')->with('status', 'successful');
+        return redirect()->route('user.task.index')->with('info', 'Task status is Changed successfully!');
     }
 }

@@ -23,22 +23,20 @@ class Task extends Model
     }
     public function toggleIsActive()
     {
-        $this->is_active = !$this->is_active;
+        $this->is_active = !$this->getRawOriginal('is_active');
         return $this;
     }
 
-    // public  function getIsActiveAttribute($attr)
-    // {
 
-    //     if ($attr == 0) {
-    //         $attr = 'Pending  ';
-    //     } else {
-    //         $attr = 'Done ';
-    //     }
+    public  function getIsActiveAttribute($attr)
+    {
 
-    //     return  $attr;
-    // }
+        if ($attr == 0) {
+            $attr = 'Pending';
+        } else {
+            $attr = 'Done';
+        }
 
-
-
+        return  $attr;
+    }
 }
